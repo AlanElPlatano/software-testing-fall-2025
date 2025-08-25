@@ -1,6 +1,4 @@
 1. Function that checks if a given number is positive, negative, or zero.
-<<<<<<< Updated upstream
-=======
 Input: -5
 Output: negative
 
@@ -11,7 +9,6 @@ Input: 10
 Output: 10
 
 
->>>>>>> Stashed changes
 
 2. Function that validates user passwords.
 
@@ -21,8 +18,6 @@ The password validation rules are as follows:
    one lowercase letter, one digit,
    and one special character (!, @, #, $, %, or &).
 
-<<<<<<< Updated upstream
-=======
 Input: 1
 Output: "La contraseña no puede ser solo números"
 
@@ -49,22 +44,18 @@ Output: "Contraseña válida"
 
 
 
->>>>>>> Stashed changes
 3. Function that calculates the discount for a customer's purchase based on the total amount.
 The discount rules are as follows:
 
 If the total amount is less than 100, no discount is applied.
 If the total amount is between 100 and 500 (inclusive), a 10% discount is applied.
 If the total amount is greater than 500, a 20% discount is applied.
-<<<<<<< Updated upstream
-=======
 
 Input: 20
-Output: "No hay descuento para ti :("
+Output: "No hay descuento para ti"
 
 Input: 128
 Output: "Tienes un descuento del 10%"
 
 Input: 777
 Output: "Tienes un descuento del 20%"
->>>>>>> Stashed changes
