@@ -6,7 +6,7 @@ Input: 0
 Output: zero
 
 Input: 10
-Output: 10
+Output: positive
 
 
 
