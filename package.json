@@ -1,0 +1,17 @@
+{
+  "name": "software-testing-fall-2025",
+  "version": "1.0.0",
+  "description": "Repository to learn about software testing tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "eslint": "^9.35.0",
+    "globals": "^16.3.0"
+  }
+}
