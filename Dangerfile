@@ -6,10 +6,10 @@
 commitIssues = []
 for commit in git.commits
   (subject, empty_line, *body) = commit.message.split("\n")
-  
+
   # Skip checks if commit has empty title or starts with "Merge"
   next if subject.nil? || subject.strip.empty? || subject.start_with?("Merge")
-  
+
   commitIssues << "Commit title is too long: &lt;#{subject}&gt;" if subject.length > 50
   commitIssues << "Commit title and body are not separated: &lt;#{subject}&gt;" if empty_line && empty_line.length > 0
   description_length = body.length > 0 ? body.first.length : 0
