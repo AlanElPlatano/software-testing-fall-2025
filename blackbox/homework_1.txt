@@ -1,0 +1,394 @@
+=========================================================== Equivalence Partitioning ===========================================================
+
+1. Function that validates credit card numbers.
+   - Valid card numbers: Length between 13 and 16 digits, containing only numeric digits.
+
+Input: 123456789012
+Output: Invalid (12 digits)
+
+Input: 1234567890123
+Output: Valid (13 digits)
+
+Input: 1234567890123456
+Output: Valid (16 digits)
+
+Input: 12345678901234567
+Output: Invalid (17 digits)
+
+Input: 123456789012a
+Output: Invalid (contains a non-numeric character)
+
+Input: 123456789012.3
+Output: Invalid (contains a special character)
+
+Input:
+Output: Invalid (empty string)
+
+
+
+2. Function that validates dates.
+   - Valid years: Between 1900 and 2100.
+   - Valid months: Between 1 and 12.
+   - Valid days: Between 1 and 31.
+
+Input: 1899/12/31
+Output: Invalid (before 1900)
+
+Input: 1900/01/01
+Output: Valid
+
+Input: 2000/06/15
+Output: Valid
+
+Input: 2100/12/31
+Output: Valid
+
+Input: 2101/01/01
+Output: Invalid (year above 2100)
+
+Input: 2000/00/15
+Output: Invalid (month below 1)
+
+Input: 2000/13/15
+Output: Invalid (month above 12)
+
+Input: 2000/06/00
+Output: Invalid (day below 1)
+
+Input: 2000/06/32
+Output: Invalid (day above 31)
+
+Input: 2001/02/29
+Output: Valid (Are counting leap years?)
+
+
+
+3. Function that checks the eligibility of a passenger to book a flight.
+   - Eligible ages: Between 18 and 65.
+   - Frequent flyers: True or False.
+
+=== Quick comment: what logic does frequent flyer have? how does it apply to the logic?  ===
+=== I'll assume it needs to be both between 18-65 and be a frequent flyer to be eligible ===
+
+Input: Age 17, Frequent flyer: True
+Output: Not eligible (below 18yo)
+
+Input: Age 18, Frequent flyer: False
+Output: Not eligible (Not frequent flyer)
+
+Input: Age 18, Frequent flyer: True
+Output: Eligible
+
+Input: Age 25, Frequent flyer: True
+Output: Eligible
+
+Input: Age 65, Frequent flyer: False
+Output: Not eligible (Not frequent flyer)
+
+Input: Age 65, Frequent flyer: True
+Output: Eligible
+
+Input: Age 66, Frequent flyer: True
+Output: Not eligible (age above 65)
+
+Input: Age 30, Frequent flyer: False
+Output: Not eligible (Not frequent flyer)
+
+Input: Age 50, Frequent flyer: False
+Output: Not eligible (Not frequent flyer)
+
+
+
+4. Function that validates URLs.
+   - Valid URLs: Length less than or equal to 255, starting with "http://" or "https://".
+
+Input: http://ejemplo.com
+Output: Valid
+
+Input: https://ejemplo.com
+Output: Valid
+
+Input: ftp://ejemplo.com
+Output: Invalid (doesn't start with http:// or https://)
+
+Input: http://
+Output: Valid (minimum valid URL)
+
+Input: https://
+Output: Valid (minimum valid URL)
+
+Input: https://www.dominioinventado.com/que/tan/largo/puedo/hacer/este/URL/no/se/pero/voy/a/seguir/escribiendo/hasta/que/me/canse/ya/no/se/que/escribir/patata/desestablecimentarianismo/tangamandapio/burocrata/creo/que/estoy/extendiendo/demasiado/el/chiste/ya/me/voy/a/detener/porque/ya/voy/en/la/columna300
+Output: Invalid (length<255)
+
+Input:
+Output: Invalid (empty string)
+
+Input: ejemplo.com
+Output: Invalid (doesn't start with http:// or https://)
+
+
+
+=========================================================== Boundary Value Analysis ===========================================================
+
+1. Function that calculates the eligibility of a person for a loan based on their income and credit score.
+   The eligibility rules are as follows:
+   - If the income is less than $30,000, the person is not eligible for a loan.
+   - If the income is between $30,000 and $60,000 (inclusive) and the credit score is above 700, the person is eligible for a standard loan.
+   - If the income is between $30,000 and $60,000 (inclusive) and the credit score is below or equal to 700, the person is eligible for a secured loan.
+   - If the income is greater than $60,000 and the credit score is above 750, the person is eligible for a premium loan.
+   - If the income is greater than $60,000 and the credit score is between 700 and 750 (inclusive), the person is eligible for a standard loan.
+
+Input: Income $29,999, Credit score 800
+Output: Not eligible (income too low)
+
+Input: Income $30,000, Credit score 701
+Output: Standard loan
+
+Input: Income $45,000, Credit score 701
+Output: Standard loan
+
+Input: Income $60,000, Credit score 701
+Output: Standard loan
+
+Input: Income $30,000, Credit score 700
+Output: Secured loan
+
+Input: Income $45,000, Credit score 700
+Output: Secured loan
+
+Input: Income $60,000, Credit score 700
+Output: Secured loan
+
+Input: Income $60,001, Credit score 751
+Output: Premium loan
+
+Input: Income $60,001, Credit score 700
+Output: Standard loan
+
+Input: Income $60,001, Credit score 750
+Output: Standard loan
+
+Input: Income $80,000, Credit score 699
+Output: Not eligible (not enough credit score)
+
+
+
+2. Function that determines the category of a product in an e-commerce system based on its price.
+   The product categories and pricing rules are as follows:
+   - Category A: Products priced between $10 and $50 (inclusive).
+   - Category B: Products priced between $51 and $100 (inclusive).
+   - Category C: Products priced between $101 and $200 (inclusive).
+   - Category D: Products priced above $200.
+
+========= What do i do with decimals? I'll assume all prices are integers ==========
+
+Input: $9
+Output: No category (below minimum price for a category)
+
+Input: $10
+Output: Category A
+
+Input: $30
+Output: Category A
+
+Input: $50
+Output: Category A
+
+Input: $51
+Output: Category B
+
+Input: $75
+Output: Category B
+
+Input: $100
+Output: Category B
+
+Input: $101
+Output: Category C
+
+Input: $150
+Output: Category C
+
+Input: $200
+Output: Category C
+
+Input: $201
+Output: Category D
+
+
+
+3. Function that calculates the cost of shipping for packages based on their weight and dimensions.
+   The shipping cost rules are as follows:
+   - If the weight of the package is less than or equal to 1 kg and the dimensions (length, width, and height) are each less than or equal to 10 cm, the cost is $5.
+   - If the weight is between 1 and 5 kg (inclusive) and the dimensions are each between 11 and 30 cm (inclusive), the cost is $10.
+   - If the weight is greater than 5 kg or any of the dimensions is greater than 30 cm, the cost is $20.
+
+Input: Weight 0.5kg, Dimensions 5cm x 5cm x 5cm
+Output: $5
+
+Input: Weight 1kg, Dimensions 10cm x 10cm x 10cm
+Output: $5
+
+Input: Weight 1kg, Dimensions 11cm x 10cm x 10cm
+Output: $10
+
+Input: Weight 1.1kg, Dimensions 11cm x 11cm x 11cm
+Output: $10
+
+Input: Weight 3kg, Dimensions 20cm x 20cm x 20cm
+Output: $10
+
+Input: Weight 5kg, Dimensions 30cm x 30cm x 30cm
+Output: $10
+
+Input: Weight 5kg, Dimensions 31cm x 30cm x 30cm
+Output: $20
+
+Input: Weight 5.1kg, Dimensions 20cm x 20cm x 20cm
+Output: $20
+
+Input: Weight 6kg, Dimensions 25cm x 25cm x 25cm
+Output: $20
+
+Input: Weight 0.5kg, Dimensions 35cm x 5cm x 5cm
+Output: $20
+
+
+
+=========================================================== Decision Table ===========================================================
+
+1. Create the decision table for a system that provides weather advisories based on temperature and humidity.
+   The rules are:
+   - Weather recommendation "High temperature and humidity. Stay hydrated." for temperature > 30 and humidity > 70.
+   - Weather recommendation "Low temperature. Don't forget your jacket!" for temperature < 0 and any humidity.
+   - No weather recommendation for any other temperature and humidity combination.
+
+===== There are a couple empty spots in the logic, i'll elaborate further in the table =====
+
+Condition                | Rule 1                                       | Rule 2            | Rule 3                                    | Rule 4            | Rule 5
+Temperature > 30         | Yes                                          | Yes               | No                                        | No                | No
+Temperature < 0          | No                                           | No                | Yes                                       | No                | No
+Humidity > 70            | Yes                                          | No                | Any                                       | Yes               | No
+Action                   | High temperature and humidity. Stay hydrated | No recommendation | Low temperature. Don't forget your jacket | No recommendation | No recommendation
+
+Input: Temperature 35°C, Humidity 80%
+Output: "High temperature and humidity. Stay hydrated."
+
+Input: Temperature 35°C, Humidity 60%
+Output: No recommendation
+
+Input: Temperature -5°C, Humidity 80%
+Output: "Low temperature. Don't forget your jacket!"
+
+Input: Temperature -5°C, Humidity 50%
+Output: "Low temperature. Don't forget your jacket!"
+
+Input: Temperature 20°C, Humidity 80%
+Output: No recommendation
+
+Input: Temperature 20°C, Humidity 50%
+Output: No recommendation
+
+
+
+2. Create the decision table for a system that authenticates users based on their username and password.
+   The rules are:
+   - Returns "Admin" for username "admin" and password "admin123".
+   - Returns "User" for any other username with at least 5 characters and password with at least 8 characters.
+   - Returns "Invalid" if the username or password lenghts are not met.
+
+Condition               | Case 1 | Case 2   | Case 3 | Case 4
+Username = "admin"      | Yes    | Yes      | No     | No
+Password = "admin123"   | Yes    | No       | Any    | Any
+Username length ≥ 5     | Any    | Any      | Yes    | No
+Password length ≥ 8     | Any    | Any      | Yes    | No
+Action                  | Admin  | Invalid  | User   | Invalid
+
+Input: Username "admin", Password "admin123"
+Output: "Admin"
+
+Input: Username "admin", Password "wrongpass"
+Output: "Invalid"
+
+Input: Username "arthur_morgan", Password "password123"
+Output: "User"
+
+Input: Username "2b", Password "secretpassword"
+Output: "Invalid" (username too short)
+
+Input: Username "bruce_wayne", Password "short"
+Output: "Invalid" (password too short)
+
+Input: Username "bob", Password "tiny"
+Output: "Invalid" (both username and password too short)
+
+
+=========================================================== State Transition ===========================================================
+
+1. Draw the state transition diagram for a simple vending machine that dispenses drinks.
+   - It has two states: "Ready" and "Dispensing".
+   - Goes from Ready to Dispensing when inserting a coin and asks you to select the drink.
+   - After selecting the drink, thanks you and goes from Dispensing to Ready.
+
+(Ready) --insert coin--> (Dispensing)
+   ^                          |
+   |                          |
+thanks!                       |
+   |                          |
+   +-------select drink-------+
+
+Input: Ready, insert coin
+Output: Dispensing, select your drink
+
+Input: Dispensing, select drink
+Output: Ready, Thanks
+
+Input: Ready, select drink
+Output: Invalid transition
+
+Input: Dispensing, insert coin
+Output: Invalid transition
+
+
+
+2. Draw the state transition diagram for an elevator system.
+   - The states are "Idle", "Moving Up" and "Moving Down".
+   - The elevator can only move up or down if the state is in "Idle" state.
+   - The elevator can only stop if the state is either "Moving Down" or "Moving Up"
+
+======== I really should have done this in a different file format, this diagram could have looked a lot better than in plain text ========
+
+     +---------stop---------+
+     |                      |
+     |                      v
+(Moving Up) <--move up-- (Idle) --move down--> (Moving Down)
+                            ^                        |
+                            |                        |
+                            +----------stop----------+
+
+Input: Idle, move up
+Output: Moving Up
+
+Input: Idle, move down
+Output: Moving Down
+
+Input: Moving Up, stop
+Output: Idle
+
+Input: Moving Down, stop
+Output: Idle
+
+Input: Moving Up, move up
+Output: Invalid transition (already moving up)
+
+Input: Moving Down, move down
+Output: Invalid transition (already moving down)
+
+Input: Moving Up, move down
+Output: Invalid transition (must stop first)
+
+Input: Moving Down, move up
+Output: Invalid transition (must stop first)
+
+Input: Idle, stop
+Output: Invalid transition (already idle)
