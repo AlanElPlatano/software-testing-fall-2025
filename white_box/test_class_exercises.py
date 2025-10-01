@@ -8,13 +8,20 @@ import unittest
 from white_box.class_exercises import (
     TrafficLight,
     VendingMachine,
+    calculate_items_shipping_cost,
+    calculate_order_total,
     calculate_total_discount,
+    categorize_product,
+    celsius_to_fahrenheit,
     check_number_status,
     divide,
     get_grade,
     is_even,
     is_triangle,
+    validate_email,
+    validate_login,
     validate_password,
+    verify_age,
 )
 
 
@@ -181,6 +188,314 @@ class TestWhiteBox(unittest.TestCase):
         Checks that amounts above 500 get 20% discount
         """
         self.assertEqual(calculate_total_discount(600), 120.0)
+
+    # 4
+    def test_calculate_order_total_quantity_1_to_5(self):
+        """
+        Checks that items with quantity 1-5 get no discount
+        """
+        items = [{"quantity": 3, "price": 10.0}]
+        self.assertEqual(calculate_order_total(items), 30.0)
+
+    def test_calculate_order_total_quantity_6_to_10(self):
+        """
+        Checks that items with quantity 6-10 get 5% discount
+        """
+        items = [{"quantity": 8, "price": 10.0}]
+        self.assertEqual(calculate_order_total(items), 76.0)
+
+    def test_calculate_order_total_quantity_above_10(self):
+        """
+        Checks that items with quantity above 10 get 10% discount
+        """
+        items = [{"quantity": 15, "price": 10.0}]
+        self.assertEqual(calculate_order_total(items), 135.0)
+
+    def test_calculate_order_total_multiple_items(self):
+        """
+        Checks total calculation with multiple items in different quantity ranges
+        """
+        items = [
+            {"quantity": 2, "price": 10.0},  # 20.0
+            {"quantity": 7, "price": 5.0},  # 33.25 (5% discount)
+            {"quantity": 12, "price": 8.0},  # 86.4 (10% discount)
+        ]
+        self.assertEqual(calculate_order_total(items), 139.65)
+
+    def test_calculate_order_total_empty_list(self):
+        """
+        Checks that empty items list returns 0
+        """
+        items = []
+        self.assertEqual(calculate_order_total(items), 0)
+
+    # 5
+    def test_shipping_standard_weight_0_to_5(self):
+        """
+        Checks standard shipping cost for weight <= 5
+        """
+        items = [{"weight": 3}]
+        self.assertEqual(calculate_items_shipping_cost(items, "standard"), 10)
+
+    def test_shipping_standard_weight_5_to_10(self):
+        """
+        Checks standard shipping cost for weight > 5 and <= 10
+        """
+        items = [{"weight": 7}]
+        self.assertEqual(calculate_items_shipping_cost(items, "standard"), 15)
+
+    def test_shipping_standard_weight_above_10(self):
+        """
+        Checks standard shipping cost for weight > 10
+        """
+        items = [{"weight": 12}]
+        self.assertEqual(calculate_items_shipping_cost(items, "standard"), 20)
+
+    def test_shipping_express_weight_0_to_5(self):
+        """
+        Checks express shipping cost for weight <= 5
+        """
+        items = [{"weight": 4}]
+        self.assertEqual(calculate_items_shipping_cost(items, "express"), 20)
+
+    def test_shipping_express_weight_5_to_10(self):
+        """
+        Checks express shipping cost for weight > 5 and <= 10
+        """
+        items = [{"weight": 8}]
+        self.assertEqual(calculate_items_shipping_cost(items, "express"), 30)
+
+    def test_shipping_express_weight_above_10(self):
+        """
+        Checks express shipping cost for weight > 10
+        """
+        items = [{"weight": 15}]
+        self.assertEqual(calculate_items_shipping_cost(items, "express"), 40)
+
+    def test_shipping_invalid_method(self):
+        """
+        Checks that invalid shipping method raises ValueError
+        """
+        items = [{"weight": 5}]
+        with self.assertRaises(ValueError):
+            calculate_items_shipping_cost(items, "overnight")
+
+    def test_shipping_multiple_items(self):
+        """
+        Checks shipping cost calculation with multiple items
+        """
+        items = [{"weight": 2}, {"weight": 3}, {"weight": 2}]  # total weight = 7
+        self.assertEqual(calculate_items_shipping_cost(items, "standard"), 15)
+
+    # 6
+    def test_validate_login_success(self):
+        """
+        Checks successful login with valid username and password lengths
+        """
+        self.assertEqual(validate_login("user123", "password1"), "Login Successful")
+
+    def test_validate_login_username_too_short(self):
+        """
+        Checks login fails when username is less than 5 characters
+        """
+        self.assertEqual(validate_login("usr", "password1"), "Login Failed")
+
+    def test_validate_login_username_too_long(self):
+        """
+        Checks login fails when username is more than 20 characters
+        """
+        self.assertEqual(validate_login("a" * 21, "password1"), "Login Failed")
+
+    def test_validate_login_password_too_short(self):
+        """
+        Checks login fails when password is less than 8 characters
+        """
+        self.assertEqual(validate_login("user123", "pass"), "Login Failed")
+
+    def test_validate_login_password_too_long(self):
+        """
+        Checks login fails when password is more than 15 characters
+        """
+        self.assertEqual(validate_login("user123", "a" * 16), "Login Failed")
+
+    def test_validate_login_boundary_min(self):
+        """
+        Checks login succeeds at minimum boundary (username=5, password=8)
+        """
+        self.assertEqual(validate_login("user1", "password"), "Login Successful")
+
+    def test_validate_login_boundary_max(self):
+        """
+        Checks login succeeds at maximum boundary (username=20, password=15)
+        """
+        self.assertEqual(validate_login("a" * 20, "a" * 15), "Login Successful")
+
+    # 7
+    def test_verify_age_eligible_min(self):
+        """
+        Checks age 18 (minimum boundary) is eligible
+        """
+        self.assertEqual(verify_age(18), "Eligible")
+
+    def test_verify_age_eligible_max(self):
+        """
+        Checks age 65 (maximum boundary) is eligible
+        """
+        self.assertEqual(verify_age(65), "Eligible")
+
+    def test_verify_age_eligible_middle(self):
+        """
+        Checks age within range is eligible
+        """
+        self.assertEqual(verify_age(40), "Eligible")
+
+    def test_verify_age_not_eligible_too_young(self):
+        """
+        Checks age below 18 is not eligible
+        """
+        self.assertEqual(verify_age(17), "Not Eligible")
+
+    def test_verify_age_not_eligible_too_old(self):
+        """
+        Checks age above 65 is not eligible
+        """
+        self.assertEqual(verify_age(66), "Not Eligible")
+
+    # 8
+    def test_categorize_product_category_a_min(self):
+        """
+        Checks price 10 (minimum boundary) returns Category A
+        """
+        self.assertEqual(categorize_product(10), "Category A")
+
+    def test_categorize_product_category_a_max(self):
+        """
+        Checks price 50 (maximum boundary) returns Category A
+        """
+        self.assertEqual(categorize_product(50), "Category A")
+
+    def test_categorize_product_category_b_min(self):
+        """
+        Checks price 51 (minimum boundary) returns Category B
+        """
+        self.assertEqual(categorize_product(51), "Category B")
+
+    def test_categorize_product_category_b_max(self):
+        """
+        Checks price 100 (maximum boundary) returns Category B
+        """
+        self.assertEqual(categorize_product(100), "Category B")
+
+    def test_categorize_product_category_c_min(self):
+        """
+        Checks price 101 (minimum boundary) returns Category C
+        """
+        self.assertEqual(categorize_product(101), "Category C")
+
+    def test_categorize_product_category_c_max(self):
+        """
+        Checks price 200 (maximum boundary) returns Category C
+        """
+        self.assertEqual(categorize_product(200), "Category C")
+
+    def test_categorize_product_category_d_below(self):
+        """
+        Checks price below 10 returns Category D
+        """
+        self.assertEqual(categorize_product(5), "Category D")
+
+    def test_categorize_product_category_d_above(self):
+        """
+        Checks price above 200 returns Category D
+        """
+        self.assertEqual(categorize_product(250), "Category D")
+
+    # 9
+    def test_validate_email_valid(self):
+        """
+        Checks valid email with @ and . within length bounds
+        """
+        self.assertEqual(validate_email("user@example.com"), "Valid Email")
+
+    def test_validate_email_too_short(self):
+        """
+        Checks email shorter than 5 characters is invalid
+        """
+        self.assertEqual(validate_email("a@b"), "Invalid Email")
+
+    def test_validate_email_too_long(self):
+        """
+        Checks email longer than 50 characters is invalid
+        """
+        self.assertEqual(validate_email("a" * 51), "Invalid Email")
+
+    def test_validate_email_no_at_symbol(self):
+        """
+        Checks email without @ symbol is invalid
+        """
+        self.assertEqual(validate_email("userexample.com"), "Invalid Email")
+
+    def test_validate_email_no_dot(self):
+        """
+        Checks email without . symbol is invalid
+        """
+        self.assertEqual(validate_email("user@examplecom"), "Invalid Email")
+
+    def test_validate_email_boundary_min(self):
+        """
+        Checks email at minimum length (5) with @ and . is valid
+        """
+        self.assertEqual(validate_email("a@b.c"), "Valid Email")
+
+    def test_validate_email_boundary_max(self):
+        """
+        Checks email at maximum length (50) with @ and . is valid
+        """
+        long_email = "user@" + "a" * 38 + ".com"  # exactly 50 chars
+        self.assertEqual(validate_email(long_email), "Valid Email")
+
+    # 10
+    def test_celsius_to_fahrenheit_zero(self):
+        """
+        Checks conversion of 0°C to 32°F
+        """
+        self.assertEqual(celsius_to_fahrenheit(0), 32.0)
+
+    def test_celsius_to_fahrenheit_positive(self):
+        """
+        Checks conversion of positive temperature (25°C to 77°F)
+        """
+        self.assertEqual(celsius_to_fahrenheit(25), 77.0)
+
+    def test_celsius_to_fahrenheit_negative(self):
+        """
+        Checks conversion of negative temperature (-40°C to -40°F)
+        """
+        self.assertEqual(celsius_to_fahrenheit(-40), -40.0)
+
+    def test_celsius_to_fahrenheit_boundary_min(self):
+        """
+        Checks conversion at minimum boundary (-100°C)
+        """
+        self.assertEqual(celsius_to_fahrenheit(-100), -148.0)
+
+    def test_celsius_to_fahrenheit_boundary_max(self):
+        """
+        Checks conversion at maximum boundary (100°C to 212°F)
+        """
+        self.assertEqual(celsius_to_fahrenheit(100), 212.0)
+
+    def test_celsius_to_fahrenheit_below_min(self):
+        """
+        Checks temperature below -100°C returns invalid
+        """
+        self.assertEqual(celsius_to_fahrenheit(-101), "Invalid Temperature")
+
+    def test_celsius_to_fahrenheit_above_max(self):
+        """
+        Checks temperature above 100°C returns invalid
+        """
+        self.assertEqual(celsius_to_fahrenheit(101), "Invalid Temperature")
 
     # 23
     def test_initial_state(self):
