@@ -553,7 +553,12 @@ class BankAccount:  # pylint: disable=too-few-public-methods
         """
         Function to display the account details.
         """
-        print(f"The account {self.account_number} has a balance of {self.balance}")
+        return (
+            "The account "
+            + str(self.account_number)
+            + " has a balance of "
+            + str(self.balance)
+        )
 
 
 class BankingSystem:
