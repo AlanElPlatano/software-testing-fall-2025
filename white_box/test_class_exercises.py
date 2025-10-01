@@ -427,7 +427,10 @@ class TestWhiteBox(unittest.TestCase):
         """
         Checks email longer than 50 characters is invalid
         """
-        self.assertEqual(validate_email("a" * 51), "Invalid Email")
+        self.assertEqual(
+            validate_email("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+            "Invalid Email",
+        )  # A lot of letters
 
     def test_validate_email_no_at_symbol(self):
         """
@@ -451,7 +454,11 @@ class TestWhiteBox(unittest.TestCase):
         """
         Checks email at maximum length (50) with @ and . is valid
         """
-        long_email = "user@" + "a" * 38 + ".com"  # exactly 50 chars
+        long_email = (
+            "user@"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + ".com"
+        )  # A lof of letters
         self.assertEqual(validate_email(long_email), "Valid Email")
 
     # 10
@@ -536,9 +543,9 @@ class TestWhiteBox(unittest.TestCase):
         Checks that the traffic light cycles through Red → Green → Yellow → Red
         """
         light = TrafficLight()
-        light.change_state()  # Red → Green
-        light.change_state()  # Green → Yellow
-        light.change_state()  # Yellow → Red
+        light.change_state()  # Red to Green
+        light.change_state()  # Green to Yellow
+        light.change_state()  # Yellow to Red
         self.assertEqual(light.get_current_state(), "Red")
 
 
