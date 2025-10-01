@@ -6,6 +6,7 @@ White-box unit testing examples.
 import unittest
 
 from white_box.class_exercises import (
+    TrafficLight,
     VendingMachine,
     calculate_total_discount,
     check_number_status,
@@ -180,6 +181,50 @@ class TestWhiteBox(unittest.TestCase):
         Checks that amounts above 500 get 20% discount
         """
         self.assertEqual(calculate_total_discount(600), 120.0)
+
+    # 23
+    def test_initial_state(self):
+        """
+        Checks that the initial state of the TrafficLight is Red
+        """
+        light = TrafficLight()
+        self.assertEqual(light.get_current_state(), "Red")
+
+    def test_change_state_red_to_green(self):
+        """
+        Checks that state changes from Red to Green
+        """
+        light = TrafficLight()
+        light.change_state()
+        self.assertEqual(light.get_current_state(), "Green")
+
+    def test_change_state_green_to_yellow(self):
+        """
+        Checks that state changes from Green to Yellow
+        """
+        light = TrafficLight()
+        light.state = "Green"  # force state
+        light.change_state()
+        self.assertEqual(light.get_current_state(), "Yellow")
+
+    def test_change_state_yellow_to_red(self):
+        """
+        Checks that state changes from Yellow to Red
+        """
+        light = TrafficLight()
+        light.state = "Yellow"  # force state
+        light.change_state()
+        self.assertEqual(light.get_current_state(), "Red")
+
+    def test_full_cycle(self):
+        """
+        Checks that the traffic light cycles through Red → Green → Yellow → Red
+        """
+        light = TrafficLight()
+        light.change_state()  # Red → Green
+        light.change_state()  # Green → Yellow
+        light.change_state()  # Yellow → Red
+        self.assertEqual(light.get_current_state(), "Red")
 
 
 class TestWhiteBoxVendingMachine(unittest.TestCase):
