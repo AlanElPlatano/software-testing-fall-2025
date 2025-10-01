@@ -427,10 +427,7 @@ class TestWhiteBox(unittest.TestCase):
         """
         Checks email longer than 50 characters is invalid
         """
-        self.assertEqual(
-            validate_email("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
-            "Invalid Email",
-        )  # A lot of letters
+        self.assertEqual(validate_email("a" * 51), "Invalid Email")  # A lot of letters
 
     def test_validate_email_no_at_symbol(self):
         """
@@ -454,11 +451,7 @@ class TestWhiteBox(unittest.TestCase):
         """
         Checks email at maximum length (50) with @ and . is valid
         """
-        long_email = (
-            "user@"
-            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            + ".com"
-        )  # A lof of letters
+        long_email = "user@" + "a" * 38 + ".com"  # exactly 50 chars
         self.assertEqual(validate_email(long_email), "Valid Email")
 
     # 10
