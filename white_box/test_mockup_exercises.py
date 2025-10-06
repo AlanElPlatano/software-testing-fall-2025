@@ -14,7 +14,6 @@ class TestBankAccount(unittest.TestCase):
     BankAccount unittest class.
     """
 
-    @patch("builtins.print")
     def test_view_account(self):
         """
         Test view_account displays correct information.
@@ -22,7 +21,7 @@ class TestBankAccount(unittest.TestCase):
         # Create a bank account instance
         account = BankAccount("ACC001", 5000)
 
-        # Assert print was called with the expected message
+        # Assert the return value is correct
         self.assertEqual(
             account.view_account(), "The account ACC001 has a balance of 5000"
         )
@@ -95,7 +94,7 @@ class TestBankingSystem(unittest.TestCase):
         self.assertFalse(result)
         mock_print.assert_called_once_with("User already logged in.")
 
-    @patch("white_box.class_exercises")
+    @patch("white_box.class_exercises.BankAccount")
     @patch("builtins.print")
     def test_transfer_money_success_regular(self, mock_print, mock_bank_account):
         """
@@ -121,7 +120,7 @@ class TestBankingSystem(unittest.TestCase):
             "processed successfully."
         )
 
-    @patch("white_box.class_exercises")
+    @patch("white_box.class_exercises.BankAccount")
     @patch("builtins.print")
     def test_transfer_money_success_express(self, mock_print, mock_bank_account):
         """
@@ -149,7 +148,7 @@ class TestBankingSystem(unittest.TestCase):
             "processed successfully."
         )
 
-    @patch("white_box.class_exercises")
+    @patch("white_box.class_exercises.BankAccount")
     @patch("builtins.print")
     def test_transfer_money_success_scheduled(self, mock_print, mock_bank_account):
         """
@@ -191,9 +190,9 @@ class TestBankingSystem(unittest.TestCase):
         self.assertFalse(result)
         mock_print.assert_called_once_with("Sender not authenticated.")
 
-    @patch("white_box.class_exercises")
+    @patch("white_box.class_exercises.BankAccount")
     @patch("builtins.print")
-    def test_transfer_money_insufficient_funds(self, mock_print):
+    def test_transfer_money_insufficient_funds(self, mock_print, mock_bank_account):
         """
         Test transfer fails with insufficient funds.
         """
@@ -201,9 +200,9 @@ class TestBankingSystem(unittest.TestCase):
         self.banking_system.authenticate("user123", "pass123")
 
         # Mock the BankAccount instance with low balance
-        # Create a mock instance of BankAccount with MagicMock
-        # mock_account_instance.balance = 50  # Not enough for 100 plus the fee
-        # mock_bank_account.return_value = mock_account_instance
+        mock_account_instance = MagicMock()
+        mock_account_instance.balance = 50  # Not enough for 2000 plus the fee
+        mock_bank_account.return_value = mock_account_instance
 
         # Call transfer_money
         result = self.banking_system.transfer_money(
