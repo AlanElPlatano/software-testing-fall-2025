@@ -185,7 +185,7 @@ class TestMain(unittest.TestCase):
 
     @patch("builtins.input", side_effect=["1", "4"])
     @patch("builtins.print")
-    def test_main_display_books_empty(self, mock_print):
+    def test_main_display_books_empty(self, mock_print, _mock_input):
         """
         Test main menu option 1 (display books) with empty store.
         """
