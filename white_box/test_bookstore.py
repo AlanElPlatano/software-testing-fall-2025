@@ -24,7 +24,7 @@ class TestBook(unittest.TestCase):
         # Call display method
         book.display()
 
-        # Assert print was called 4 times (title, author, price, quantity)
+        # Assert print was called 4 times (one for each of title, author, price, quantity)
         self.assertEqual(mock_print.call_count, 4)
         mock_print.assert_any_call("Title: Python 101")
         mock_print.assert_any_call("Author: John Doe")
@@ -114,7 +114,7 @@ class TestBookStore(unittest.TestCase):
         # Search for existing book
         self.bookstore.search_book("Python 101")
 
-        # Assert book found message is printed
+        # Assert the book found message is printed
         calls = [str(call) for call in mock_print.call_args_list]
         self.assertTrue(
             any("Found 1 book(s) with title 'Python 101':" in call for call in calls)
