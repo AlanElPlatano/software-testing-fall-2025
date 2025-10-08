@@ -14,7 +14,7 @@ class TestBook(unittest.TestCase):
     """
 
     @patch("builtins.print")
-    def test_display_book(self, mock_print):
+    def test_display_book(self, mock_print, _mock_input):
         """
         Test display method shows correct book information.
         """
@@ -47,7 +47,7 @@ class TestBookStore(unittest.TestCase):
         self.book3 = Book("C++ Advanced", "Bob Johnson", 49.99, 2)
 
     @patch("builtins.print")
-    def test_add_book_success(self, mock_print):
+    def test_add_book_success(self, mock_print, _mock_input):
         """
         Test adding a book to the store.
         """
@@ -60,7 +60,7 @@ class TestBookStore(unittest.TestCase):
         mock_print.assert_called_once_with("Book 'Python 101' added to the store.")
 
     @patch("builtins.print")
-    def test_add_multiple_books(self, mock_print):
+    def test_add_multiple_books(self, mock_print, _mock_input):
         """
         Test adding multiple books to the store.
         """
@@ -74,7 +74,7 @@ class TestBookStore(unittest.TestCase):
         self.assertEqual(mock_print.call_count, 3)
 
     @patch("builtins.print")
-    def test_display_books_empty_store(self, mock_print):
+    def test_display_books_empty_store(self, mock_print, _mock_input):
         """
         Test displaying books when store is empty.
         """
@@ -85,7 +85,7 @@ class TestBookStore(unittest.TestCase):
         mock_print.assert_called_once_with("No books in the store.")
 
     @patch("builtins.print")
-    def test_display_books_with_books(self, mock_print):
+    def test_display_books_with_books(self, mock_print, _mock_input):
         """
         Test displaying books when store has books.
         """
@@ -103,7 +103,7 @@ class TestBookStore(unittest.TestCase):
         mock_print.assert_any_call("Books available in the store:")
 
     @patch("builtins.print")
-    def test_search_book_found(self, mock_print):
+    def test_search_book_found(self, mock_print, _mock_input):
         """
         Test searching for a book that exists in the store.
         """
@@ -121,7 +121,7 @@ class TestBookStore(unittest.TestCase):
         )
 
     @patch("builtins.print")
-    def test_search_book_not_found(self, mock_print):
+    def test_search_book_not_found(self, mock_print, _mock_input):
         """
         Test searching for a book that doesn't exist in the store.
         """
@@ -138,7 +138,7 @@ class TestBookStore(unittest.TestCase):
         )
 
     @patch("builtins.print")
-    def test_search_book_case_insensitive(self, mock_print):
+    def test_search_book_case_insensitive(self, mock_print, _mock_input):
         """
         Test that search is case-insensitive.
         """
@@ -156,7 +156,7 @@ class TestBookStore(unittest.TestCase):
         )
 
     @patch("builtins.print")
-    def test_search_book_multiple_copies(self, mock_print):
+    def test_search_book_multiple_copies(self, mock_print, _mock_input):
         """
         Test searching when multiple copies of same title exist.
         """
@@ -202,7 +202,7 @@ class TestMain(unittest.TestCase):
         side_effect=["3", "Python 101", "John Doe", "29.99", "5", "1", "4"],
     )
     @patch("builtins.print")
-    def test_main_add_and_display_book(self, mock_print):
+    def test_main_add_and_display_book(self, mock_print, _mock_input):
         """
         Test main menu option 3 (add book) and then option 1 (display).
         """
@@ -231,7 +231,7 @@ class TestMain(unittest.TestCase):
         ],
     )
     @patch("builtins.print")
-    def test_main_add_and_search_book(self, mock_print):
+    def test_main_add_and_search_book(self, mock_print, _mock_input):
         """
         Test main menu option 3 (add book) and then option 2 (search).
         """
@@ -249,7 +249,7 @@ class TestMain(unittest.TestCase):
 
     @patch("builtins.input", side_effect=["2", "Nonexistent Book", "4"])
     @patch("builtins.print")
-    def test_main_search_not_found(self, mock_print):
+    def test_main_search_not_found(self, mock_print, _mock_input):
         """
         Test main menu option 2 (search) for non-existing book.
         """
@@ -266,7 +266,7 @@ class TestMain(unittest.TestCase):
 
     @patch("builtins.input", side_effect=["5", "4"])
     @patch("builtins.print")
-    def test_main_invalid_choice(self, mock_print):
+    def test_main_invalid_choice(self, mock_print, _mock_input):
         """
         Test main menu with invalid choice.
         """
@@ -281,7 +281,7 @@ class TestMain(unittest.TestCase):
 
     @patch("builtins.input", side_effect=["4"])
     @patch("builtins.print")
-    def test_main_exit_immediately(self, mock_print):
+    def test_main_exit_immediately(self, mock_print, _mock_input):
         """
         Test main menu with immediate exit (option 4).
         """
@@ -309,7 +309,7 @@ class TestMain(unittest.TestCase):
         ],
     )
     @patch("builtins.print")
-    def test_main_add_multiple_books_and_display(self, mock_print):
+    def test_main_add_multiple_books_and_display(self, mock_print, _mock_input):
         """
         Test adding multiple books and displaying them.
         """
