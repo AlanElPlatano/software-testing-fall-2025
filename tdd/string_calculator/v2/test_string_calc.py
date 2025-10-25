@@ -4,7 +4,7 @@ string calculator testing script
 
 import unittest
 
-from tdd.string_calculator.v1.string_calc import add_strings as add
+from tdd.string_calculator.v2.string_calc import add_strings as add
 
 
 class TestStringCalculator(unittest.TestCase):

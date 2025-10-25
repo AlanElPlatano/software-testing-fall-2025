@@ -20,4 +20,7 @@ def add_strings(numbers):
 
     # Split by comma and sum all numbers
     parts = numbers.split(",")
-    return sum(int(part) for part in parts)
+    total = 0
+    for part in parts:
+        total += int(part)
+    return total
