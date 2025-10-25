@@ -1,3 +1,4 @@
 [MESSAGES CONTROL]
 disable=
     R0904
+    R0801
