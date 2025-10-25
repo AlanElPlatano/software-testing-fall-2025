@@ -4,11 +4,11 @@ string calculator testing script
 
 import unittest
 
-from tdd.string_calculator.v2.string_calc import add_strings as add
+from tdd.string_calculator.v3.string_calc import add_strings as add
 
 
 class TestStringCalculator(unittest.TestCase):
-    """String calculator script up to requirement 2
+    """String calculator script up to requirement 3
     https://tddmanifesto.com/exercises/
     """
 
@@ -72,6 +72,27 @@ class TestStringCalculator(unittest.TestCase):
         """Test ten comma-separated numbers"""
         result = add("1,2,3,4,5,6,7,8,9,10")
         self.assertEqual(result, 55)
+
+    # Tests for newline separator (v3)
+    def test_newline_separator(self):
+        """Test numbers separated by newlines"""
+        result = add("1\n2\n3")
+        self.assertEqual(result, 6)
+
+    def test_mixed_comma_and_newline(self):
+        """Test mixed comma and newline separators"""
+        result = add("1,2\n3")
+        self.assertEqual(result, 6)
+
+    def test_newline_with_multiple_numbers(self):
+        """Test newline with multiple numbers"""
+        result = add("4\n5\n6")
+        self.assertEqual(result, 15)
+
+    def test_mixed_separators_complex(self):
+        """Test complex mix of comma and newline separators"""
+        result = add("1\n2,3\n4,5")
+        self.assertEqual(result, 15)
 
 
 if __name__ == "__main__":

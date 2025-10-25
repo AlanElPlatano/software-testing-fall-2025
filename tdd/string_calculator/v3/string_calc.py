@@ -12,11 +12,14 @@ def add_strings(numbers):
 
     https://tddmanifesto.com/exercises/
 
-    Exercise 2 (up to requirement 2)
+    Exercise 3 (up to requirement 3 - handle newlines)
     """
     # If empty just return 0
     if numbers == "":
         return 0
+
+    # Replace newlines with commas to normalize separators
+    numbers = numbers.replace("\n", ",")
 
     # Split by comma and sum all numbers
     parts = numbers.split(",")
